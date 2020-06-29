@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      database: bingo
+      url: mongodb://localhost:27017
