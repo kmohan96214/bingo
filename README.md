@@ -12,6 +12,8 @@ APIS:
 
 Steps to run the application
 
--- ./gradlew clean build
--- docker build -t tambola-api .
--- docker-compose up
+1. ./gradlew clean build
+
+2. docker build -t tambola-api .
+
+3. docker-compose up
