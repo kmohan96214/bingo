@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,7 +29,7 @@ public class GameController {
     /*
         Creates and return a Game ID
      */
-    @GetMapping("/create")
+    @PostMapping("/create")
     @ResponseBody
     public ResponseEntity<Long> game() {
         return ResponseEntity.ok().body(service.createGame());
@@ -37,7 +38,7 @@ public class GameController {
     /*
         Take gameId as input creates and returns a ticket
      */
-    @GetMapping("/{gameId}/ticket/{username}/generate")
+    @PostMapping("/{gameId}/ticket/{username}/generate")
     @ResponseBody
     public ResponseEntity<Long> ticket(@PathVariable("gameId") Long gameId, @PathVariable("username") String username) {
         return ResponseEntity.ok().body(service.createTicket(username, gameId));
