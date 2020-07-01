@@ -1,5 +1,8 @@
 package com.warikoo.round.bingo.tambola.services;
 
+import java.util.Objects;
+import javax.annotation.PostConstruct;
+
 import com.warikoo.round.bingo.tambola.models.GameCounter;
 import com.warikoo.round.bingo.tambola.repository.GameCounterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +20,12 @@ public class GameSequencer implements Sequencer {
     private GameCounterRepository repository;
     
     @Override
+    @PostConstruct
     public void init() {
-        repository.save(new GameCounter(1000L));
+        GameCounter gc = repository.findTopByOrderByIdDesc();
+        if (Objects.isNull(gc)) {
+            repository.save(new GameCounter(1000L));
+        }
     }
     
     @Override

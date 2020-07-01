@@ -2,7 +2,8 @@ package com.warikoo.round.bingo.tambola.models;
 
 import java.util.ArrayList;
 
-import lombok.AllArgsConstructor;
+import javax.persistence.Id;
+
 import lombok.Data;
 
 /**
@@ -11,8 +12,10 @@ import lombok.Data;
  **/
 
 @Data
-@AllArgsConstructor
 public class Ticket {
+    
+    @Id
+    String id;
     
     String username;
     
@@ -21,5 +24,12 @@ public class Ticket {
     Long ticketId;
     
     ArrayList<ArrayList<Integer>> ticket;
+    
+    public Ticket(String username, Long gameId, Long ticketId, ArrayList<ArrayList<Integer>> ticket){
+        this.username = username;
+        this.gameId = gameId;
+        this.ticketId = ticketId;
+        this.ticket = ticket;
+    }
     
 }

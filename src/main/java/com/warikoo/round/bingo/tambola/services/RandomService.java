@@ -11,6 +11,7 @@ import com.warikoo.round.bingo.tambola.models.Game;
 import com.warikoo.round.bingo.tambola.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author krishnamohan
@@ -18,16 +19,20 @@ import org.springframework.stereotype.Service;
  **/
 
 @Service
+@Slf4j
 public class RandomService {
     
     @Autowired
     private GameRepository gameRepository;
     
     public Integer getRandomUnusedNumber(Long gameId) {
+        log.info("generating random number for game {}", gameId);
         Game game = gameRepository.findByGameId(gameId);
         Integer next = game.getRandomOrder().get(game.getCurr());
         game.setCurr((short) (game.getCurr() + 1));
+        game.getNumbersPicked().add(next);
         gameRepository.save(game);
+        log.info("Generated random number : {}", next);
         return next;
     }
     
