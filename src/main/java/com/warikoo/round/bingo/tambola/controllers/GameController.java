@@ -24,26 +24,42 @@ public class GameController {
     
     @Autowired
     private GameService service;
-
+    
+    /*
+        Creates and return a Game ID
+     */
     @GetMapping("/create")
     @ResponseBody
     public ResponseEntity<Long> game() {
         return ResponseEntity.ok().body(service.createGame());
     }
-
+    
+    /*
+        Take gameId as input creates and returns a ticket
+     */
     @GetMapping("/{gameId}/ticket/{username}/generate")
     @ResponseBody
-    public ResponseEntity<Long> ticket(@PathVariable("gameId") Long gameId,
-            @PathVariable("username") String username) {
+    public ResponseEntity<Long> ticket(@PathVariable("gameId") Long gameId, @PathVariable("username") String username) {
         return ResponseEntity.ok().body(service.createTicket(username, gameId));
     }
     
+    /*
+        Gets a Random number for a game without duplicates - 200
+        Return 400 with error message if all numbers are already picked
+     */
     @GetMapping("/{gameId}/number/random")
     @ResponseBody
-    public ResponseEntity<Integer> getRandom(@PathVariable("gameId") Long gameId) {
-        return ResponseEntity.ok().body(service.getRandomNumber(gameId));
+    public ResponseEntity<Object> getRandom(@PathVariable("gameId") Long gameId) {
+        Integer random = service.getRandomNumber(gameId);
+        if (Objects.isNull(random)) {
+            return ResponseEntity.badRequest().body("All numbers are already picked");
+        }
+        return ResponseEntity.ok().body(random);
     }
     
+    /*
+        Returns number picked for a game if game exists else return 400 bad request
+     */
     @GetMapping("/{gameId}/numbers")
     @ResponseBody
     public ResponseEntity<ArrayList<Integer>> getNumbers(@PathVariable("gameId") Long gameId) {
@@ -55,6 +71,9 @@ public class GameController {
         }
     }
     
+    /*
+        Returns stats of game if game exists else return 400 bad request
+     */
     @GetMapping("/{gameId}/stats")
     @ResponseBody
     public ResponseEntity<Stats> getStats(@PathVariable("gameId") Long gameId) {

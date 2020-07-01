@@ -29,6 +29,9 @@ public class RandomService {
         log.info("generating random number for game {}", gameId);
         Game game = gameRepository.findByGameId(gameId);
         Integer next = game.getRandomOrder().get(game.getCurr());
+        if (game.getCurr() == 99) {
+            return null;
+        }
         game.setCurr((short) (game.getCurr() + 1));
         game.getNumbersPicked().add(next);
         gameRepository.save(game);
