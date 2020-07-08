@@ -1,0 +1,17 @@
+version: "2.0"
+services:
+  mongo:
+    image: mongo:3.6.3
+    ports:
+      - 27017:27017
+    command: --smallfiles
+
+  tambola-api:
+    image: tambola-api
+    ports:
+      - 8080:8080
+    links:
+      - mongo:mongo
+    entrypoint: "java -Djava.security.egd=file:/dev/./urandom -jar app.jar"
+    depends_on:
+      - mongo

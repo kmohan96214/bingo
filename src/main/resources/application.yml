@@ -3,3 +3,6 @@ spring:
     mongodb:
       database: bingo
       uri: mongodb://mongo:27017
+
+server:
+  port: 9080
